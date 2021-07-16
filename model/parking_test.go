@@ -1,8 +1,7 @@
 package model
 
 import (
-	"bufio"
-	"strings"
+	"os"
 	"testing"
 	"time"
 
@@ -76,14 +75,20 @@ func TestParkingSequenceEqual(t *testing.T) {
 
 func TestGetParkingSequence(t *testing.T) {
 	assert := assert.New(t)
-	in := bufio.NewReader(strings.NewReader(unorderTestDate))
-	ps, _ := GetParkingSequence(in)
+	inData, err := os.Open("../data/test1.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
 	assert.Equal(ps.Equal(orderTestDate), true, "ParkingSeq time should be equal")
 }
 
 func TestMaxPlace(t *testing.T) {
 	assert := assert.New(t)
-	in := bufio.NewReader(strings.NewReader(unorderTestDate))
-	ps, _ := GetParkingSequence(in)
+	inData, err := os.Open("../data/test1.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
 	assert.Equal(ps.GetMaxParkingPlace(), 2, "Max plase shoukd be equal 2")
 }
