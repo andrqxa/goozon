@@ -7,26 +7,24 @@ import (
 	"github.com/andrqxa/goozon/model"
 )
 
+var (
+	unorderTestDate = `16.07.2021 09:00:00; 16.07.2021 09:30:00
+	16.07.2021 08:15:00; 16.07.2021 08:45:00
+	16.07.2021 08:00:00; 16.07.2021 08:30:00
+	16.07.2021 08:40:00; 16.07.2021 09:00:00
+	`
+	orderTestDate model.ParkingSeq
+)
+
+const (
+	timeTemplate = "02.01.2006 15:04:05"
+)
+
 func main() {
 	parkSeq, err := model.GetParkingSequence(os.Stdin)
 	if err != nil {
 		panic(err)
 	}
-	maxPlace := 0
-	start := parkSeq[0].Start
-	end := parkSeq[len(parkSeq)-1].End
-	duration := end.Sub(start).Nanoseconds() / 1e9
-	parkingDuration := make([]int, duration, duration)
-	for _, p := range parkSeq {
-		currentDuration := p.End.Sub(p.Start).Nanoseconds() / 1e9
-		offcet := p.Start.Sub(start).Nanoseconds() / 1e9
-		for i := 0; int64(i) < currentDuration; i++ {
-			parkingDuration[offcet+int64(i)]++
-			currentElement := parkingDuration[offcet+int64(i)]
-			if currentElement > maxPlace {
-				maxPlace = currentElement
-			}
-		}
-	}
-	fmt.Printf("The maximum number of vehicles at the same time in the parking lot equals %d\n", maxPlace)
+
+	fmt.Printf("The maximum number of vehicles at the same time in the parking lot equals %d\n", parkSeq.GetMaxParkingPlace())
 }
