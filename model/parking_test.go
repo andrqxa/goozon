@@ -83,12 +83,62 @@ func TestGetParkingSequence(t *testing.T) {
 	assert.Equal(ps.Equal(orderTestDate), true, "ParkingSeq time should be equal")
 }
 
-func TestMaxPlace(t *testing.T) {
+func TestTwoMaxPlace(t *testing.T) {
 	assert := assert.New(t)
 	inData, err := os.Open("../data/test1.txt")
 	if err != nil {
 		panic(err)
 	}
 	ps, _ := GetParkingSequence(inData)
-	assert.Equal(ps.GetMaxParkingPlace(), 2, "Max plase shoukd be equal 2")
+	assert.Equal(ps.GetMaxParkingPlace(), 2, "Max plase should be equal 2")
+}
+
+func TestOnePlace(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test2.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 1, "Max plase should be equal 1")
+}
+
+func TestOneSeparatePlace(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test4.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 1, "Max plase should be equal 1")
+}
+
+func TestOneIntersectingPlace(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test5.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 1, "Max plase should be equal 1")
+}
+
+func TestZeroPlace(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test3.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 0, "Max plase should be equal 0")
+}
+
+func TestThreePlace(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test0.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 3, "Max plase should be equal 3")
 }

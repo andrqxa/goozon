@@ -86,6 +86,9 @@ func GetParkingSequence(i io.Reader) (ParkingSeq, error) {
 }
 
 func (parkSeq ParkingSeq) GetMaxParkingPlace() int {
+	if parkSeq.Len() == 0 {
+		return 0
+	}
 	maxPlace := 0
 	start := parkSeq[0].Start
 	end := parkSeq[len(parkSeq)-1].End
