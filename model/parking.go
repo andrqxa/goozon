@@ -85,20 +85,35 @@ func GetParkingSequence(i io.Reader) (ParkingSeq, error) {
 	return result, nil
 }
 
+func (parkSeq ParkingSeq) GetTimeEnd() time.Time {
+	switch parkSeq.Len() {
+	case 0:
+		return time.Now()
+	case 1:
+		return parkSeq[0].End
+	}
+
+	max := parkSeq[0].End
+	for _, t := range parkSeq[1:] {
+		if max.Before(t.End) {
+			max = t.End
+		}
+	}
+	return max
+}
+
 func (parkSeq ParkingSeq) GetMaxParkingPlace() int {
 	if parkSeq.Len() == 0 {
 		return 0
 	}
 	maxPlace := 0
 	start := parkSeq[0].Start
-	end := parkSeq[len(parkSeq)-1].End
+	end := parkSeq.GetTimeEnd()
 	duration := end.Sub(start).Nanoseconds() / 1e9
 	parkingDuration := make([]int, duration, duration)
 	for _, p := range parkSeq {
 		currentDuration := p.End.Sub(p.Start).Nanoseconds() / 1e9
 		offcet := p.Start.Sub(start).Nanoseconds() / 1e9
-		fmt.Printf("currentDuration=%d\n", currentDuration)
-		fmt.Printf("offcet=%d\n", offcet)
 		for i := 0; int64(i) < currentDuration-1; i++ {
 			parkingDuration[offcet+int64(i)]++
 			currentElement := parkingDuration[offcet+int64(i)]
