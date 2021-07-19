@@ -97,7 +97,9 @@ func (parkSeq ParkingSeq) GetMaxParkingPlace() int {
 	for _, p := range parkSeq {
 		currentDuration := p.End.Sub(p.Start).Nanoseconds() / 1e9
 		offcet := p.Start.Sub(start).Nanoseconds() / 1e9
-		for i := 0; int64(i) < currentDuration; i++ {
+		fmt.Printf("currentDuration=%d\n", currentDuration)
+		fmt.Printf("offcet=%d\n", offcet)
+		for i := 0; int64(i) < currentDuration-1; i++ {
 			parkingDuration[offcet+int64(i)]++
 			currentElement := parkingDuration[offcet+int64(i)]
 			if currentElement > maxPlace {

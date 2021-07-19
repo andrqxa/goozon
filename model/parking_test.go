@@ -142,3 +142,33 @@ func TestThreePlace(t *testing.T) {
 	ps, _ := GetParkingSequence(inData)
 	assert.Equal(ps.GetMaxParkingPlace(), 3, "Max plase should be equal 3")
 }
+
+// func TestPanic(t *testing.T) {
+// 	assert := assert.New(t)
+// 	inData, err := os.Open("../data/test_ozon1.txt")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	ps, _ := GetParkingSequence(inData)
+// 	assert.Panics(func() { ps.GetMaxParkingPlace() }, "invalid data")
+// }
+
+func TestMemory(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test_ozon2.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 2, "Max plase should be equal 2")
+}
+
+func TestMemory2(t *testing.T) {
+	assert := assert.New(t)
+	inData, err := os.Open("../data/test6.txt")
+	if err != nil {
+		panic(err)
+	}
+	ps, _ := GetParkingSequence(inData)
+	assert.Equal(ps.GetMaxParkingPlace(), 2, "Max plase should be equal 2")
+}
